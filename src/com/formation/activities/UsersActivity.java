@@ -19,9 +19,9 @@ public class UsersActivity extends Activity {
 	static final int PICK_USER = 1;
 	private ListView usersView;
 	private User selectedUser;
-	private static int selectedPosition = -1;
+	public static int selectedPosition = -1;
 	private UserArrayAdapter adapter;
-	List<User> users;
+	private List<User> users;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class UsersActivity extends Activity {
 
 		usersView = (ListView) findViewById(R.id.list_users);
 
-		adapter = new UserArrayAdapter(usersView.getContext(), R.layout.activity_user_row, users);
+		adapter = new UserArrayAdapter(usersView.getContext(), R.layout.activity_user_row, R.id.row_fullname, users);
 		usersView.setAdapter(adapter);
 
 		// ArrayAdapter adapter = new ArrayAdapter<User>(listUsers.getContext(),
@@ -56,16 +56,34 @@ public class UsersActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
 				selectedPosition = position;
-				selectedUser = (User) parent.getItemAtPosition(position);
 
-				Intent userActivity = new Intent(UsersActivity.this, UserDetailActivity.class);
-				userActivity.putExtra("requestUser", selectedUser);
-				startActivityForResult(userActivity, PICK_USER);
+				selectedUser = (User) adapter.getItem(position);
+
+				Intent userIntent = new Intent(UsersActivity.this, UserDetailActivity.class);
+				userIntent.putExtra("requestUser", selectedUser);
+				startActivityForResult(userIntent, PICK_USER);
 			}
 		});
 	}
 
-	@Override
+	/*
+	 * @Override protected void onResume() { super.onResume();
+	 * 
+	 * if (selectedPosition != -1) { Log.e("selectedPosition",
+	 * Integer.toString(selectedPosition)); if (usersView != null) { View
+	 * selectedUserView = usersView.getChildAt(selectedPosition); if
+	 * (selectedUserView != null) { boolean isActive =
+	 * UserDetailActivity.preferences.getBoolean("isActive",
+	 * users.get(selectedPosition).isActive()); if (isActive) { selectedUserView
+	 * .setBackgroundColor(usersView.getContext().getResources().getColor(R.
+	 * color.green)); } else { selectedUserView
+	 * .setBackgroundColor(usersView.getContext().getResources().getColor(R.
+	 * color.red)); } } else { Log.e("NO selectedUserView", ""); } } else {
+	 * Log.e("NO USERS VIEW", ""); } } else { Log.e("selectedPosition = -1",
+	 * ""); } }
+	 */
+
+/*	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 
@@ -75,20 +93,24 @@ public class UsersActivity extends Activity {
 				if (responseUser != null) {
 					users.set(selectedPosition, responseUser);
 					Log.e("SELECTED_USER", users.get(selectedPosition).toString());
+					for (User u : users) {
+						Log.e("FORRRR", u.toString());
+					}
 
-					/*
-					 * adapter.updateData(users); Log.e("RESPONSE_USER",
-					 * responseUser.toString());
-					 */
+					// refreshList(users);
+
+					usersView.refreshDrawableState();
 
 					View selectedUserView = usersView.getChildAt(selectedPosition);
 					boolean isActive = UserDetailActivity.preferences.getBoolean("isActive", responseUser.isActive());
 					if (isActive) {
-						selectedUserView.setBackgroundColor(R.color.green);
+						selectedUserView
+								.setBackgroundColor(usersView.getContext().getResources().getColor(R.color.green));
 					} else {
-						selectedUserView.setBackgroundColor(R.color.red);
+						selectedUserView
+								.setBackgroundColor(usersView.getContext().getResources().getColor(R.color.red));
 					}
-					
+
 					adapter = new UserArrayAdapter(usersView.getContext(), R.layout.activity_user_row, users);
 					usersView.setAdapter(adapter);
 
@@ -96,31 +118,27 @@ public class UsersActivity extends Activity {
 				}
 			}
 		}
-	}
+	}*/
 
-	private void refreshList() {
-		adapter.notifyDataSetChanged();
-/*		usersView.invalidate();
-		usersView.invalidateViews();*/
-	}
+	/*
+	 * private void refreshList(List<User> users) { adapter.getValues().clear();
+	 * adapter.getValues().addAll(users); adapter.notifyDataSetChanged(); }
+	 */
 
 	protected void onPause() {
 		super.onPause();
 		setContentView(R.layout.activity_users);
+		Log.e("USERS.onPause", "");
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.users, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
 			return true;

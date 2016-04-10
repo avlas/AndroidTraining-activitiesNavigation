@@ -8,12 +8,16 @@ public class User implements Serializable {
 	private String firstName;
 	private String lastName;
 	private boolean isActive;
-
+	
+	public User(){		
+	}
+	
 	public User(String firstName, String lastName, int photo) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.photo = photo;
+		this.isActive = false;
 	}
 
 	public int getPhoto() {

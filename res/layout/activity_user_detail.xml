@@ -10,32 +10,46 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.formation.activities.UserDetailActivity" >
 
-    <ImageView
-        android:id="@+id/detail_logo"
-        android:layout_width="50px"
-        android:layout_height="50px"
-        android:layout_marginLeft="5px"
-        android:layout_marginRight="20px"
-        android:layout_marginTop="5px" />
-
-    <TextView
-        android:id="@+id/detail_fullname"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/ll_logo_fullname"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20px" />
+        android:orientation="horizontal" >
 
-    <CheckBox
-        android:id="@+id/detail_isActive"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/detail_logo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp" />
 
-    <ImageView
-        android:id="@+id/detail_extern_logo"
-        android:layout_width="50px"
-        android:layout_height="50px"
-        android:layout_marginLeft="5px"
-        android:layout_marginRight="20px"
-        android:layout_marginTop="5px" />
+        <TextView
+            android:id="@+id/detail_fullname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_activation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <CheckBox
+            android:id="@+id/detail_isActive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/detail_extern_logo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/button_back"
