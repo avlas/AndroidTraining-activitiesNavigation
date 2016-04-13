@@ -45,7 +45,8 @@ public class UserDetailActivity extends Activity {
 		preferences = this.getSharedPreferences("saveUserDetail", Context.MODE_WORLD_WRITEABLE);
 
 		selectedUser = (User) getIntent().getExtras().get("requestUser");
-
+		//selectedUser = (User) getIntent().getExtras().getSerializableExtra("requestUser");
+		
 		initView();
 
 		Button backButton = (Button) findViewById(R.id.button_back);
